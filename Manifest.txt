@@ -1,0 +1,7 @@
+History.txt
+Manifest.txt
+README.txt
+Rakefile
+lib/stateful.rb
+lib/stateful/version.rb
+test/helper.rb
