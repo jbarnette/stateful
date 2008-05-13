@@ -12,7 +12,7 @@ module Stateful #:nodoc:
       end
       
       def event(event, &block)
-        target = (@target.events[event] ||= Stateful::Event.new)
+        target = @target.events[event] ||= Stateful::Event.new
         Stateful::Builders::Event.new(target).update(&block) if block_given?
       end
       
