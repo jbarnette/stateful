@@ -13,7 +13,8 @@ module Stateful #:nodoc:
       
       def moves(pair)
         raise BadTransition.new(pair) unless Hash === pair && pair.size == 1
-        @event.transitions.merge!(pair)
+        froms, to = pair.keys.first, pair.values.first        
+        Array(froms).each { |from| @event.transitions[from] = to }
       end
       
       def stays(state)

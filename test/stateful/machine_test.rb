@@ -91,5 +91,16 @@ module Stateful
         end
       end
     end
+    
+    def test_update_event_blocks_moves_handles_multiple_start_states
+      @machine.update do
+        event :activate do
+          moves [:inactive, :active] => :active
+        end
+      end
+      
+      activate = @machine.events[:activate]
+      assert_equal(2, activate.transitions.size)
+    end    
   end
 end
