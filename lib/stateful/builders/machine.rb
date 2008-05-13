@@ -3,8 +3,8 @@ require "stateful/builders/event"
 module Stateful #:nodoc:
   module Builders #:nodoc:
     class Machine #:nodoc:
-      def initialize(target)
-        @target = target
+      def initialize(machine)
+        @machine = machine
       end
       
       def update(&block)
@@ -12,17 +12,17 @@ module Stateful #:nodoc:
       end
       
       def event(event, &block)
-        target = @target.events[event] ||= Stateful::Event.new
+        target = @machine.events[event] ||= Stateful::Event.new
         Stateful::Builders::Event.new(target).update(&block) if block_given?
       end
       
       def start(state)
-        @target.start = state
+        @machine.start = state
       end
       
       def state(state)
-        @target.states[state] ||= Stateful::State.new
-        @target.start = state unless @target.start
+        @machine.states[state] ||= Stateful::State.new
+        @machine.start = state unless @machine.start
       end
       
       def states(*states)
