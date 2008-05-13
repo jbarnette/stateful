@@ -124,5 +124,27 @@ module Stateful
         end
       END
     end
+
+    [:firing, :fired].each do |kind|
+      class_eval <<-END, __FILE__, __LINE__
+        def test_update_block_event_#{kind}_listener
+          nothing = lambda {}
+          names = [:foo, :bar]
+          
+          @machine.update do
+            #{kind}(*names, &nothing)
+          end
+          
+          names.each do |name|
+            assert(@machine.events[name].listeners(#{kind.inspect}).include?(nothing))
+          end
+        end
+        
+        def test_update_block_global_state_#{kind}_listener
+          @machine.update { #{kind} {} }
+          assert_equal(1, @machine.listeners(#{kind.inspect}).size)
+        end
+      END
+    end
   end
 end
