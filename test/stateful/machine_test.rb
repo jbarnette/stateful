@@ -58,5 +58,20 @@ module Stateful
       
       assert_equal({:inactive => :active, :active => :active }, activate.transitions)
     end
+    
+    def test_update_event_blocks_are_additive
+      @machine.update do
+        event :activate do
+          moves :inactive => :active
+          stays :active
+        end
+      end
+      
+      activate = @machine.events[:activate]
+      assert_equal(2, activate.transitions.size)
+      
+      @machine.update { event(:activate) { stays :dormant } }
+      assert_equal(3, activate.transitions.size)
+    end
   end
 end
