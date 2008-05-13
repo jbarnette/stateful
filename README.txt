@@ -15,16 +15,6 @@
       state :angry
       state :angsty
     
-      # can define methods inside a state block! they're only available to
-      # be called in that state. call from anywhere else and an exception
-      # is raised.
-    
-      state :lucid do
-        def something
-          # i can only be called in the "lucid" state!
-        end
-      end
-    
       event :traffic do
         # an event must specify all the places it can be called. it can put
         # them in a 'moves' line, like this,
