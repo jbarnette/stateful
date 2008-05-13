@@ -101,6 +101,28 @@ module Stateful
       
       activate = @machine.events[:activate]
       assert_equal(2, activate.transitions.size)
-    end    
+    end
+
+    [:entering, :entered, :exiting].each do |kind|
+      class_eval <<-END, __FILE__, __LINE__
+        def test_update_block_state_#{kind}_listener
+          nothing = lambda {}
+          names = [:foo, :bar]
+          
+          @machine.update do
+            #{kind}(*names, &nothing)
+          end
+          
+          names.each do |name|
+            assert(@machine.states[name].listeners(#{kind.inspect}).include?(nothing))
+          end
+        end
+        
+        def test_update_block_global_state_#{kind}_listener
+          @machine.update { #{kind} {} }
+          assert_equal(1, @machine.listeners(#{kind.inspect}).size)
+        end
+      END
+    end
   end
 end

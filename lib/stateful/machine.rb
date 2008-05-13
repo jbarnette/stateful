@@ -1,7 +1,10 @@
 require "stateful/builders/machine"
+require "stateful/listeners"
 
 module Stateful
   class Machine
+    include Stateful::Listeners
+
     attr_reader   :events
     attr_accessor :start
     attr_reader   :states
