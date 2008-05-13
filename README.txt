@@ -14,6 +14,9 @@
       # or one at a time
       state :angry
       state :angsty
+
+      # note that you don't have to declare states at all if you don't want to:
+      # they'll be auto-created when events (or the machine's start) refer to them.
     
       event :traffic do
         # an event must specify all the places it can be called. it can put
