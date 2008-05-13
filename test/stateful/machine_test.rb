@@ -57,14 +57,14 @@ module Stateful
       @machine.update do
         event :activate do
           moves :inactive => :active
-          stays :active
+          stays :active, :hyper
         end
       end
       
       activate = @machine.events[:activate]
       assert_not_nil(activate)
       
-      assert_equal({:inactive => :active, :active => :active }, activate.transitions)
+      assert_equal({:inactive => :active, :active => :active, :hyper => :hyper }, activate.transitions)
     end
     
     def test_update_event_blocks_are_additive

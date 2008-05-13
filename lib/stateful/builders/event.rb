@@ -17,8 +17,8 @@ module Stateful #:nodoc:
         Array(froms).each { |from| @event.transitions[from] = to }
       end
       
-      def stays(state)
-        moves(state => state)
+      def stays(*names)
+        names.each { |n| moves(n => n) }
       end
     end
   end
