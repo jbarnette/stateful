@@ -81,5 +81,15 @@ module Stateful
       @machine.update { event(:activate) { stays :dormant } }
       assert_equal(3, activate.transitions.size)
     end
+    
+    def test_update_event_blocks_moves_complains_about_bad_pairs
+      assert_raise(Stateful::BadTransition) do
+        @machine.update do
+          event :activate do
+            moves :active => :inactive, :somnolent => :febrile
+          end
+        end
+      end
+    end
   end
 end
