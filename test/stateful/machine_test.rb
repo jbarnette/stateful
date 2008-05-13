@@ -39,6 +39,14 @@ module Stateful
       assert_same(foo, @machine.states[:foo])
     end
     
+    def test_update_block_first_state_specified_becomes_start
+      assert_nil(@machine.start)
+      @machine.update { state :foo }
+      assert_equal(:foo, @machine.start)
+      @machine.update { state :bar }
+      assert_equal(:foo, @machine.start)
+    end
+    
     def test_update_block_can_specify_events
       assert_equal({}, @machine.events)
       @machine.update { event :activate }

@@ -22,6 +22,7 @@ module Stateful #:nodoc:
       
       def state(state)
         @target.states[state] ||= Stateful::State.new
+        @target.start = state unless @target.start
       end
       
       def states(*states)
