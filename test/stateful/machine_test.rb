@@ -147,8 +147,16 @@ module Stateful
       END
     end
     
-    def test_case_name
-      
+    def test_execute_complains_about_non_stateful_models
+      assert_raise(Stateful::BadModel) { @machine.execute("thingy", :activate) }
+    end
+    
+    class AStatefulClass
+      include Stateful
+    end
+    
+    def test_execute_complains_about_missing_events
+      assert_raise(Stateful::EventNotFound) { @machine.execute(AStatefulClass.new, :activate) }
     end
   end
 end

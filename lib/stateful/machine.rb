@@ -20,8 +20,9 @@ module Stateful
       self
     end
     
-    def execute(model, event)
-      
+    def execute(model, name)
+      raise Stateful::BadModel.new(model) unless Stateful === model
+      event = events[name] or raise Stateful::EventNotFound.new(name)
     end
   end
 end
