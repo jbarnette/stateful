@@ -14,8 +14,8 @@ module Stateful #:nodoc:
       end
             
       def event(name, &block)
-        event = @machine.events[name] ||= Stateful::Event.new
-        Stateful::Builders::Event.new(event).update(&block) if block_given?
+        event = @machine.events[name] ||= Stateful::Event.new(name)
+        Stateful::Builders::Event.new(self, event).update(&block) if block_given?
         event
       end
       
@@ -24,7 +24,7 @@ module Stateful #:nodoc:
       end
       
       def state(name)
-        state = @machine.states[name] ||= Stateful::State.new
+        state = @machine.states[name] ||= Stateful::State.new(name)
         @machine.start = name unless @machine.start
         state
       end

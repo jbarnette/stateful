@@ -56,7 +56,7 @@ module Stateful
     def test_update_event_block_can_specify_transitions
       @machine.update do
         event :activate do
-          moves :inactive => :active
+          changes :inactive => :active
           stays :active, :hyper
         end
       end
@@ -70,7 +70,7 @@ module Stateful
     def test_update_event_blocks_are_additive
       @machine.update do
         event :activate do
-          moves :inactive => :active
+          changes :inactive => :active
           stays :active
         end
       end
@@ -82,25 +82,35 @@ module Stateful
       assert_equal(3, activate.transitions.size)
     end
     
-    def test_update_event_blocks_moves_complains_about_bad_pairs
+    def test_update_event_blocks_changes_complains_about_bad_pairs
       assert_raise(ArgumentError) do
         @machine.update do
           event :activate do
-            moves :active => :inactive, :somnolent => :febrile
+            changes :active => :inactive, :somnolent => :febrile
           end
         end
       end
     end
     
-    def test_update_event_blocks_moves_handles_multiple_start_states
+    def test_update_event_blocks_changes_handles_multiple_start_states
       @machine.update do
         event :activate do
-          moves [:inactive, :active] => :active
+          changes [:inactive, :active] => :active
         end
       end
       
       activate = @machine.events[:activate]
       assert_equal(2, activate.transitions.size)
+    end
+    
+    def test_event_block_transitions_autovivify_states
+      @machine.update do
+        event :activate do
+          changes :inactive => :active
+        end
+      end
+      
+      assert_equal(2, @machine.states.size)
     end
 
     [:entering, :entered, :exiting].each do |kind|
@@ -152,11 +162,47 @@ module Stateful
     end
     
     class AStatefulClass
-      include Stateful
+      statefully do
+        start :inactive
+        
+        event :activate do
+          changes :inactive => :active
+        end
+        
+        event :deactivate do
+          changes :active => :inactive
+        end
+      end
     end
     
     def test_execute_complains_about_missing_events
-      assert_raise(Stateful::EventNotFound) { @machine.execute(AStatefulClass.new, :activate) }
+      machine = AStatefulClass.state_machine
+      assert_raise(Stateful::EventNotFound) { machine.execute(AStatefulClass.new, :destroy) }
+    end
+    
+    def test_execute_complains_about_bad_transitions
+      machine = AStatefulClass.state_machine
+      assert_raise(Stateful::BadTransition) { machine.execute(AStatefulClass.new, :deactivate) }
+    end
+    
+    def test_execute_lifecycle
+      steps = []
+      
+      machine = AStatefulClass.statefully do
+        firing { steps << :firing } 
+        exiting { steps << :exiting }
+        entering { steps << :entering }
+        entered { steps << :entered }
+        fired { steps << :fired }
+      end
+      
+      model = AStatefulClass.new
+      assert_equal(:inactive, model.current_state)      
+      
+      machine.execute(model, :activate)
+      assert_equal(:active, model.current_state)
+      
+      assert_equal([:firing, :exiting, :entering, :entered, :fired], steps)
     end
   end
 end

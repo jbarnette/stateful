@@ -3,7 +3,6 @@
 == Example
 
   class AClass
-    include Stateful
   
     # :start is optional, defaults to first state declared    
     statefully(:start => :foo) do
@@ -20,8 +19,8 @@
     
       event :traffic do
         # an event must specify all the places it can be called. it can put
-        # them in a 'moves' line, like this,
-        moves :state_or_list => :dest
+        # them in a 'changes' line, like this,
+        changes :state_or_list => :dest
       
         # or it can specify that the event 'cycles', staying in the originating state
         stays :state_or_list
@@ -85,7 +84,6 @@
   # (an event is triggered, e.g., model.finish!)
   #   - if all matching 'event firing'
   #     - if all matching 'state exiting'
-  #       - all matching 'state exited'
   #       - if all matching 'state entering'
   #         - STATE CHANGE PERSISTED
   #         - all matching 'state entered'

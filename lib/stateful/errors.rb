@@ -6,14 +6,20 @@ module Stateful
   end
 
   class BadTransition < StandardError
-    def initialize(bad)
-      super("Bad transition: #{bad.inspect}")
+    def initialize(model, event)
+      super("Can't #{event.name} while #{model.current_state}: #{model.inspect}")
     end
   end
   
   class EventNotFound < StandardError
-    def initialize(event)
-      super("Event not found: #{event.inspect}")
+    def initialize(name)
+      super("Event not found: #{name}")
+    end
+  end
+  
+  class StateNotFound < StandardError
+    def initialize(name)
+      super("State not found: #{name}")
     end
   end
 end

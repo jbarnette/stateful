@@ -4,9 +4,10 @@ module Stateful
   class Event
     include Stateful::Listeners
     
-    attr_reader :transitions
+    attr_reader :name, :transitions
     
-    def initialize
+    def initialize(name)
+      @name = name
       @transitions = {}
     end
   end
