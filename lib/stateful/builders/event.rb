@@ -12,7 +12,10 @@ module Stateful #:nodoc:
       end
       
       def moves(pair)
-        raise BadTransition.new(pair) unless Hash === pair && pair.size == 1
+        unless Hash === pair && pair.size == 1
+          raise ArgumentError.new("Not a pair: #{pair.inspect}")
+        end
+        
         froms, to = pair.keys.first, pair.values.first        
         Array(froms).each { |from| @event.transitions[from] = to }
       end

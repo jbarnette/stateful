@@ -83,7 +83,7 @@ module Stateful
     end
     
     def test_update_event_blocks_moves_complains_about_bad_pairs
-      assert_raise(Stateful::BadTransition) do
+      assert_raise(ArgumentError) do
         @machine.update do
           event :activate do
             moves :active => :inactive, :somnolent => :febrile
@@ -145,6 +145,10 @@ module Stateful
           assert_equal(1, @machine.listeners(#{kind.inspect}).size)
         end
       END
+    end
+    
+    def test_case_name
+      
     end
   end
 end

@@ -19,5 +19,9 @@ module Stateful
       Stateful::Builders::Machine.new(self).update(&block) if block_given?
       self
     end
+    
+    def execute(model, event)
+      
+    end
   end
 end
