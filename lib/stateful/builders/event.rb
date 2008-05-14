@@ -8,7 +8,7 @@ module Stateful #:nodoc:
         @event = event
       end
       
-      def update(&block)
+      def apply(&block)
         instance_eval(&block)
       end
       

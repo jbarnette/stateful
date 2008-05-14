@@ -8,6 +8,6 @@ require "stateful/support"
 class Class
   def statefully(options={}, &block)
     include Stateful::Support unless self < Stateful::Support
-    state_machine.update(options, &block)
+    state_machine.apply(options, &block)
   end
 end

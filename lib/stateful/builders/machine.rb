@@ -3,19 +3,17 @@ require "stateful/builders/event"
 module Stateful #:nodoc:
   module Builders #:nodoc:
     class Machine #:nodoc:
-      LISTENERS = { :event => [:firing, :fired], :state => [:entering, :entered, :exiting] }
-
       def initialize(machine)
         @machine = machine
       end
       
-      def update(&block)
+      def apply(&block)
         instance_eval(&block)
       end
             
       def event(name, &block)
         event = @machine.events[name] ||= Stateful::Event.new(name)
-        Stateful::Builders::Event.new(self, event).update(&block) if block_given?
+        Stateful::Builders::Event.new(self, event).apply(&block) if block_given?
         event
       end
       
@@ -33,6 +31,8 @@ module Stateful #:nodoc:
         names.each { |n| state n }
       end
       
+      LISTENERS = { :event => [:firing, :fired], :state => [:entering, :entered, :exiting] }
+
       LISTENERS.each do |source, kinds|
         kinds.each do |kind|
           class_eval <<-END, __FILE__, __LINE__

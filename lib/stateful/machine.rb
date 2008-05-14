@@ -14,9 +14,9 @@ module Stateful
       @states = {}
     end
     
-    def update(options={}, &block)
+    def apply(options={}, &block)
       @start = options[:start] if options[:start]
-      Stateful::Builders::Machine.new(self).update(&block) if block_given?
+      Stateful::Builders::Machine.new(self).apply(&block) if block_given?
       self
     end
     
@@ -43,8 +43,8 @@ module Stateful
     private
     
     def multicast(target, event_name, args)
-      fire(event_name, *args)
-      target.fire(event_name, *args)
+      fire(event_name, *args) # first fire the global listeners,
+      target.fire(event_name, *args) # then the ones for a specific state/event
     end
   end
 end
