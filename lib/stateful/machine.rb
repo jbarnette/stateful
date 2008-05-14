@@ -42,7 +42,7 @@ module Stateful
     end
     
     def execute(model, name)
-      raise Stateful::BadModel.new(model) unless Stateful::Support === model
+      raise Stateful::BadModel.new(model) unless model.class.stateful?
       
       now   = model.current_state
       event = events[name] or raise EventNotFound.new(name)

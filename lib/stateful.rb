@@ -3,17 +3,23 @@ require "stateful/errors"
 require "stateful/machine"
 require "stateful/state"
 require "stateful/event"
-require "stateful/support"
+require "stateful/persisters/default"
 
 class Class
   def statefully(options={}, &block)
-    include Stateful::Support unless self < Stateful::Support
+    unless stateful?
+      @stateful = Stateful::Machine.new
+      include Stateful::Persisters::Default
+    end
 
-    @machine ||= Stateful::Machine.new
-    return @machine if options.empty? && !block_given?    
+    return @stateful if options.empty? && !block_given?    
 
-    @machine.apply(options, &block)
-    @machine.accessorize(self)
-    @machine
+    @stateful.apply(options, &block)
+    @stateful.accessorize(self)
+    @stateful
+  end
+  
+  def stateful?
+    defined? @stateful
   end
 end
