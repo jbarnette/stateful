@@ -18,6 +18,28 @@ module Stateful
       Stateful::Builders::Machine.new(self).apply(options, &block)
       self
     end
+        
+    def accessorize(target)
+      @states.keys.each do |name|
+        unless target.method_defined?("#{name}?")
+          target.class_eval <<-END, __FILE__, __LINE__
+            def #{name}?
+              current_state == #{name.inspect}
+            end
+          END
+        end
+      end
+      
+      @events.keys.each do |name|
+        unless target.method_defined?("#{name}!")
+          target.class_eval <<-END, __FILE__, __LINE__
+            def #{name}!
+              self.class.statefully.execute(self, #{name.inspect})
+            end
+          END
+        end
+      end
+    end
     
     def execute(model, name)
       raise Stateful::BadModel.new(model) unless Stateful::Support === model

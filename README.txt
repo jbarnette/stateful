@@ -40,7 +40,7 @@
     # all the block params are optional. your block can take no arguments
     # if that sproings your winkie.
   
-    entering :state_or_list do |model, to, from|
+    entering :state_or_list do |model, event, to, from|
       # do some ruby stuff! Exceptions thrown in here will
       # keep the transition from occuring, i.e., the model's
       # current state will still be 'from'.
@@ -49,7 +49,7 @@
     # you can also listen for successful state entry. same optional block
     # params are available.
   
-    entered :state_or_list do |model, to, from|
+    entered :state_or_list do |model, event, to, from|
       # more ruby stuff! You can throw exceptions in here, of course,
       # but it won't change the model's current state.
     end
@@ -57,7 +57,7 @@
     # listening for attempted state exit is just like state entry,
     # but the destination state is provided instead of the source.
   
-    exiting :state_or_list do |model, to, from|
+    exiting :state_or_list do |model, event, to, from|
       # awesome ruby stuff! throwing exceptions in here vetoes
       # the transition.
     end

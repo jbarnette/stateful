@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + "/../helper")
 module Stateful
   class MachineTest < Test::Unit::TestCase
     def setup
-      @machine = Stateful::Machine.new      
+      @machine = Stateful::Machine.new
     end
 
     def test_apply_returns_self
@@ -178,13 +178,15 @@ module Stateful
     end
     
     def test_execute_complains_about_missing_events
-      machine = AStatefulClass.state_machine
-      assert_raise(Stateful::EventNotFound) { machine.execute(AStatefulClass.new, :destroy) }
+      assert_raise(Stateful::EventNotFound) do
+        AStatefulClass.statefully.execute(AStatefulClass.new, :destroy)
+      end
     end
     
     def test_execute_complains_about_bad_transitions
-      machine = AStatefulClass.state_machine
-      assert_raise(Stateful::BadTransition) { machine.execute(AStatefulClass.new, :deactivate) }
+      assert_raise(Stateful::BadTransition) do
+        AStatefulClass.statefully.execute(AStatefulClass.new, :deactivate)
+      end
     end
     
     def test_execute_lifecycle
@@ -205,6 +207,33 @@ module Stateful
       assert_equal(:active, model.current_state)
       
       assert_equal([:firing, :exiting, :entering, :entered, :fired], steps)
+    end
+    
+    def test_firing
+      global, specific = nil
+      
+      machine = AStatefulClass.statefully do
+        firing { |*args| global = args }
+        firing(:activate) { |*args| specific = args }
+      end
+      
+      model = AStatefulClass.new
+      machine.execute(model, :activate)
+      
+      # model, event, to, from
+      assert_equal([model, :activate, :active, :inactive], global)
+      assert_equal([model, :activate, :active, :inactive], specific)
+    end
+
+    def test_instance_helpers
+      model = AStatefulClass.new
+      
+      assert(model.inactive?)
+      assert(!model.active?)
+      
+      model.activate!
+      assert(!model.inactive?)
+      assert(model.active?)
     end
   end
 end

@@ -3,17 +3,7 @@ module Stateful
     attr_writer :current_state
 
     def current_state
-      @current_state ||= self.class.state_machine.start
-    end
-
-    def self.included(base)
-      base.extend(ClassMethods)
-    end
-
-    module ClassMethods
-      def state_machine
-        @state_machine ||= Stateful::Machine.new
-      end
+      @current_state ||= self.class.statefully.start
     end
   end
 end
