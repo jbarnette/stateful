@@ -7,8 +7,9 @@ module Stateful #:nodoc:
         @machine = machine
       end
       
-      def apply(&block)
-        instance_eval(&block)
+      def apply(options={}, &block)
+        @machine.start = state(options[:start]).name if options[:start]
+        instance_eval(&block) if block_given?
       end
             
       def event(name, &block)

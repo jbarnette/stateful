@@ -15,8 +15,7 @@ module Stateful
     end
     
     def apply(options={}, &block)
-      @start = options[:start] if options[:start]
-      Stateful::Builders::Machine.new(self).apply(&block) if block_given?
+      Stateful::Builders::Machine.new(self).apply(options, &block)
       self
     end
     
