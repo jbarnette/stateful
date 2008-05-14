@@ -18,6 +18,7 @@ module Stateful
     def test_apply_block_can_specify_start
       @machine.apply { start :foo }
       assert_equal(:foo, @machine.start)
+      assert_equal(1, @machine.states.size)
     end
     
     def test_apply_block_can_specify_states

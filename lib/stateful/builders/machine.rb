@@ -18,7 +18,7 @@ module Stateful #:nodoc:
       end
       
       def start(name)
-        @machine.start = name
+        @machine.start = state(name).name
       end
       
       def state(name)
