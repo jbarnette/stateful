@@ -51,19 +51,19 @@ module Stateful
       to    = states[dest] or raise StateNotFound.new(dest)
       args  = model, event.name, to.name, from.name
       
-      multicast(event, :firing, args)
-      multicast(from, :exiting, args)
-      multicast(to, :entering, args)
+      multifire(event, :firing, args)
+      multifire(from, :exiting, args)
+      multifire(to, :entering, args)
       
       model.current_state = to.name
       
-      multicast(to, :entered, args)
-      multicast(event, :fired, args)
+      multifire(to, :entered, args)
+      multifire(event, :fired, args)
     end
     
     private
     
-    def multicast(target, event_name, args)
+    def multifire(target, event_name, args)
       fire(event_name, *args) # first fire the global listeners,
       target.fire(event_name, *args) # then the ones for a specific state/event
     end

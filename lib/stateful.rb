@@ -3,6 +3,7 @@ require "stateful/errors"
 require "stateful/machine"
 require "stateful/state"
 require "stateful/event"
+
 require "stateful/persisters/default"
 
 class Class
@@ -20,6 +21,6 @@ class Class
   end
   
   def stateful?
-    defined? @stateful
+    defined?(@stateful)
   end
 end

@@ -9,8 +9,8 @@ lib/stateful/errors.rb
 lib/stateful/event.rb
 lib/stateful/listeners.rb
 lib/stateful/machine.rb
+lib/stateful/persisters/default.rb
 lib/stateful/state.rb
-lib/stateful/support.rb
 lib/stateful/version.rb
 test/helper.rb
 test/stateful/machine_test.rb
