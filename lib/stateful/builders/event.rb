@@ -12,7 +12,7 @@ module Stateful #:nodoc:
         instance_eval(&block)
       end
       
-      def changes(pair)
+      def moves(pair)
         unless Hash === pair && pair.size == 1
           raise ArgumentError.new("Not a pair: #{pair.inspect}")
         end
@@ -25,7 +25,7 @@ module Stateful #:nodoc:
       end
       
       def stays(*names)
-        names.each { |n| changes(n => n) }
+        names.each { |n| moves(n => n) }
       end
     end
   end

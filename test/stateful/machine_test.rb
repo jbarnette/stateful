@@ -58,7 +58,7 @@ module Stateful
     def test_apply_event_block_can_specify_transitions
       @machine.apply do
         event :activate do
-          changes :inactive => :active
+          moves :inactive => :active
           stays :active, :hyper
         end
       end
@@ -72,7 +72,7 @@ module Stateful
     def test_apply_event_blocks_are_additive
       @machine.apply do
         event :activate do
-          changes :inactive => :active
+          moves :inactive => :active
           stays :active
         end
       end
@@ -84,20 +84,20 @@ module Stateful
       assert_equal(3, activate.transitions.size)
     end
     
-    def test_apply_event_blocks_changes_complains_about_bad_pairs
+    def test_apply_event_blocks_moves_complains_about_bad_pairs
       assert_raise(ArgumentError) do
         @machine.apply do
           event :activate do
-            changes :active => :inactive, :somnolent => :febrile
+            moves :active => :inactive, :somnolent => :febrile
           end
         end
       end
     end
     
-    def test_apply_event_blocks_changes_handles_multiple_from_states
+    def test_apply_event_blocks_moves_handles_multiple_from_states
       @machine.apply do
         event :activate do
-          changes [:inactive, :active] => :active
+          moves [:inactive, :active] => :active
         end
       end
       
@@ -108,7 +108,7 @@ module Stateful
     def test_event_block_transitions_autovivify_states
       @machine.apply do
         event :activate do
-          changes :inactive => :active
+          moves :inactive => :active
         end
       end
       
@@ -168,11 +168,11 @@ module Stateful
         start :inactive
         
         event :activate do
-          changes :inactive => :active
+          moves :inactive => :active
         end
         
         event :deactivate do
-          changes :active => :inactive
+          moves :active => :inactive
         end
       end
     end

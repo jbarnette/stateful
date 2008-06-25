@@ -19,8 +19,8 @@
     
       event :traffic do
         # an event must specify all the places it can be called. it can put
-        # them in a 'changes' line, like this,
-        changes :state_or_list => :dest
+        # them in a 'moves' line, like this,
+        moves :state_or_list => :dest
       
         # or it can specify that the event 'cycles', staying in the originating state
         stays :state_or_list
@@ -106,7 +106,7 @@
   #
   # it'll use the Rails logging bits if they're around, etc, etc.
   
-  # Need to audit your state changes?
+  # Need to audit your state moves?
   # include Stateful::Timestamps
   #
   # it'll set attributes for state_at and event_fired_at if respond_to?
