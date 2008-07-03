@@ -1,8 +1,12 @@
 require "stateful/builders/event"
+require "stateful/event"
+require "stateful/state"
 
 module Stateful #:nodoc:
   module Builders #:nodoc:
     class Machine #:nodoc:
+      attr_reader :machine
+      
       def initialize(machine)
         @machine = machine
       end
@@ -38,8 +42,8 @@ module Stateful #:nodoc:
         kinds.each do |kind|
           class_eval <<-END, __FILE__, __LINE__
             def #{kind}(*names, &block)
-              @machine.listeners(#{kind.inspect}) << block if names.empty?
-              names.each { |n| #{source}(n).listeners(#{kind.inspect}) << block }
+              @machine.listeners[#{kind.inspect}] << block if names.empty?
+              names.each { |n| #{source}(n).listeners[#{kind.inspect}] << block }
             end
           END
         end

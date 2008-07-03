@@ -9,18 +9,18 @@ require "stateful/persisters/default"
 class Class
   def statefully(options={}, &block)
     unless stateful?
-      @stateful = Stateful::Machine.new
+      @machine = Stateful::Machine.new
       include Stateful::Persisters::Default
     end
 
-    return @stateful if options.empty? && !block_given?    
+    return @machine if options.empty? && !block_given?
 
-    @stateful.apply(options, &block)
-    @stateful.accessorize(self)
-    @stateful
+    @machine.apply(options, &block)
+    @machine.accessorize(self)
+    @machine
   end
-  
+
   def stateful?
-    defined?(@stateful)
+    defined?(@machine)
   end
 end

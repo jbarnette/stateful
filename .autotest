@@ -1,0 +1,4 @@
+Autotest.add_hook :initialize do |at|
+  at.add_exception("spec.opts")
+  at.find_directories = %w(lib spec)
+end

@@ -22,21 +22,21 @@ module Stateful
     def accessorize(target)
       @states.keys.each do |name|
         unless target.method_defined?("#{name}?")
-          target.class_eval <<-END, __FILE__, __LINE__
+          target.class_eval <<-RUBY
             def #{name}?
               current_state == #{name.inspect}
             end
-          END
+          RUBY
         end
       end
       
       @events.keys.each do |name|
         unless target.method_defined?("#{name}!")
-          target.class_eval <<-END, __FILE__, __LINE__
+          target.class_eval <<-RUBY
             def #{name}!
               self.class.statefully.execute(self, #{name.inspect})
             end
-          END
+          RUBY
         end
       end
     end
@@ -51,20 +51,20 @@ module Stateful
       to    = states[dest] or raise StateNotFound.new(dest)
       args  = model, event.name, to.name, from.name
       
-      multifire(event, :firing, args)
-      multifire(from, :exiting, args)
-      multifire(to, :entering, args)
+      fire(event, :firing, args)
+      fire(from, :exiting, args)
+      fire(to, :entering, args)
       
       model.current_state = to.name
       
-      multifire(to, :entered, args)
-      multifire(event, :fired, args)
+      fire(to, :entered, args)
+      fire(event, :fired, args)
     end
     
     private
     
-    def multifire(target, event_name, args)
-      fire(event_name, *args) # first fire the global listeners,
+    def fire(target, event_name, args)
+      super(event_name, *args) # first fire the global listeners,
       target.fire(event_name, *args) # then the ones for a specific state/event
     end
   end

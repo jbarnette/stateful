@@ -1,12 +1,11 @@
 module Stateful #:nodoc:
   module Listeners #:nodoc:
-    def listeners(kind)
+    def listeners
       @listeners ||= Hash.new { |h,k| h[k] = [] }
-      @listeners[kind]
     end
     
     def fire(kind, *args)
-      listeners(kind).each { |l| l.call(*args) }
+      listeners[kind].each { |l| l[*args] }
     end
   end
 end

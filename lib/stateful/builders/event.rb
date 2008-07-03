@@ -3,6 +3,8 @@ require "stateful/builders/event"
 module Stateful #:nodoc:
   module Builders #:nodoc:
     class Event #:nodoc:
+      attr_accessor :parent, :event
+      
       def initialize(parent, event)
         @parent = parent
         @event = event
@@ -18,7 +20,7 @@ module Stateful #:nodoc:
         end
         
         # ensure all referenced states exist
-        pair.to_a.flatten.each { |n| @parent.state(n) }
+        pair.to_a.flatten.uniq.each { |n| @parent.state(n) }
         
         froms, to = pair.keys.first, pair.values.first
         Array(froms).each { |from| @event.transitions[from] = to }
