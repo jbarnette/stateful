@@ -1,11 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{stateful}
-  s.version = "1.0.0.200807031356"
+  s.version = "1.0.0.200807042242"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["John Barnette"]
-  s.autorequire = %q{stateful}
-  s.date = %q{2008-07-03}
+  s.date = %q{2008-07-04}
   s.description = %q{Make your Ruby objects stately.}
   s.email = %q{jbarnette@rubyforge.org}
   s.extra_rdoc_files = ["README.rdoc"]
@@ -13,6 +12,7 @@ Gem::Specification.new do |s|
   s.has_rdoc = true
   s.homepage = %q{http://github.com/jbarnette/stateful}
   s.require_paths = ["lib"]
+  s.rubyforge_project = %q{stateful}
   s.rubygems_version = %q{1.2.0}
   s.summary = %q{Make your Ruby objects stately.}
 

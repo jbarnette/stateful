@@ -7,22 +7,19 @@ require "spec/rake/spectask"
 require "./lib/stateful/version.rb"
 
 stateful_gemspec = Gem::Specification.new do |s|
-  s.name             = "stateful"
-  s.version          = Stateful::VERSION
-  s.platform         = Gem::Platform::RUBY
-  s.has_rdoc         = true
-  s.extra_rdoc_files = ["README.rdoc"]
-  s.summary          = "Make your Ruby objects stately."
-  s.description      = s.summary
-  s.author           = "John Barnette"
-  s.email            = "jbarnette@rubyforge.org"
-  s.homepage         = "http://github.com/jbarnette/stateful"
-  s.require_path     = "lib"
-  s.autorequire      = "stateful"
-  s.files            = %w(README.rdoc Rakefile) + Dir.glob("{lib,spec}/**/*")
-  
-  # Uncomment this to add a dependency
-  # s.add_dependency "foo"
+  s.name              = "stateful"
+  s.rubyforge_project = "stateful"
+  s.version           = Stateful::VERSION
+  s.platform          = Gem::Platform::RUBY
+  s.has_rdoc          = true
+  s.extra_rdoc_files  = ["README.rdoc"]
+  s.summary           = "Make your Ruby objects stately."
+  s.description       = s.summary
+  s.author            = "John Barnette"
+  s.email             = "jbarnette@rubyforge.org"
+  s.homepage          = "http://github.com/jbarnette/stateful"
+  s.require_path      = "lib"
+  s.files             = %w(README.rdoc Rakefile) + Dir.glob("{lib,spec}/**/*")
 end
 
 Rake::GemPackageTask.new(stateful_gemspec) do |pkg|
