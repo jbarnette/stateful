@@ -87,6 +87,21 @@ describe Stateful::Machine do
         activate.transitions.size.must == 3
       end
       
+      it "can specify events available everywhere with :ANYTHING" do
+        @machine.apply do
+          on :pause do
+            move :active => :inactive
+            move :ANYTHING => :paused
+          end
+        end
+        
+        pause = @machine.events[:pause]
+        pause.transitions.size.must == 2
+        
+        pause.transitions[:active].must == :inactive
+        pause.transitions[:furious].must == :paused
+      end
+      
       sample_names = [:foo, :bar]
       sample_block = lambda {}
       

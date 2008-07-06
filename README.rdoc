@@ -25,6 +25,12 @@
         # or it can specify that the event 'cycles', staying in the originating state
         stay :state_or_list
       end
+      
+      # events that are available on any state can be wildcarded with :ANYTHING
+      
+      on :ping do
+        move :ANYTHING => :pinged
+      end
     end
   end
 
