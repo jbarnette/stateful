@@ -1,10 +1,10 @@
 Gem::Specification.new do |s|
   s.name = %q{stateful}
-  s.version = "1.0.0.200807052303"
+  s.version = "1.0.0.200807060249"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["John Barnette"]
-  s.date = %q{2008-07-05}
+  s.date = %q{2008-07-06}
   s.description = %q{Make your Ruby objects stately.}
   s.email = %q{jbarnette@rubyforge.org}
   s.extra_rdoc_files = ["README.rdoc"]

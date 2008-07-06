@@ -155,7 +155,7 @@ official releases (hosted on RubyForge), you can track the development version.
 Development versions will have a timestamped version number, like 1.0.0.200807060242.
 
   [sudo] gem sources -a http://gems.github.com   # if you haven't already
-  [sudo] gem install stateful
+  [sudo] gem install jbarnette-stateful
 
 == License
 
