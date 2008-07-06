@@ -54,13 +54,13 @@ describe Stateful::Machine do
       end
       
       it "can specify events" do
-        @machine.apply { event :activate }
+        @machine.apply { on :activate }
         @machine.events[:activate].must_not be_nil
       end
       
       it "can specify event transitions" do
         @machine.apply do
-          event :activate do
+          on :activate do
             moves :inactive => :active
             stays :active, :hyper
           end
@@ -74,7 +74,7 @@ describe Stateful::Machine do
       
       it "can build events incrementally" do
         @machine.apply do
-          event :activate do
+          on :activate do
             moves :inactive => :active
             stays :active
           end
@@ -83,7 +83,7 @@ describe Stateful::Machine do
         activate = @machine.events[:activate]
         activate.transitions.size.must == 2
         
-        @machine.apply { event(:activate) { stays :dormant } }
+        @machine.apply { on(:activate) { stays :dormant } }
         activate.transitions.size.must == 3
       end
       
@@ -144,7 +144,7 @@ describe Stateful::Machine do
     end
     
     it "defines event! methods" do
-      @machine.apply { event :castigate }
+      @machine.apply { on :castigate }
       @machine.accessorize(@klass)
       
       @klass.instance_methods.must include("castigate!")
@@ -153,7 +153,7 @@ describe Stateful::Machine do
     it "doesn't trample existing event! methods" do
       @klass.send(:define_method, :castigate!) { "ohai" }
       
-      @machine.apply { event :castigate }
+      @machine.apply { on :castigate }
       @machine.accessorize(@klass)
 
       @klass.new.castigate!.must == "ohai"
@@ -171,11 +171,11 @@ describe Stateful::Machine do
       statefully do
         start :inactive
         
-        event :activate do
+        on :activate do
           moves :inactive => :active
         end
         
-        event :deactivate do
+        on :deactivate do
           moves :active => :inactive
         end
       end

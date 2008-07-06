@@ -16,7 +16,7 @@ module Stateful #:nodoc:
         instance_eval(&block) if block_given?
       end
             
-      def event(name, &block)
+      def on(name, &block)
         event = @machine.events[name] ||= Stateful::Event.new(name)
         Stateful::Builders::Event.new(self, event).apply(&block) if block_given?
         event
@@ -36,7 +36,7 @@ module Stateful #:nodoc:
         names.each { |n| state n }
       end
       
-      LISTENERS = { :event => [:firing, :fired], :state => [:entering, :entered, :exiting] }
+      LISTENERS = { :on => [:firing, :fired], :state => [:entering, :entered, :exiting] }
 
       LISTENERS.each do |source, kinds|
         kinds.each do |kind|

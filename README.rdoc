@@ -15,15 +15,15 @@
       state :angsty
 
       # note that you don't have to declare states at all if you don't want to:
-      # they'll be auto-created when events (or the machine's start) refer to them.
+      # they'll be auto-created the first time they're referenced.
     
-      event :traffic do
+      on :traffic do
         # an event must specify all the places it can be called. it can put
-        # them in a 'moves' line, like this,
-        moves :state_or_list => :dest
+        # them in a 'move' line, like this,
+        move :state_or_list => :dest
       
         # or it can specify that the event 'cycles', staying in the originating state
-        stays :state_or_list
+        stay :state_or_list
       end
     end
   end

@@ -10,14 +10,14 @@ describe Stateful::Builders::Machine do
     @builder.machine.stub!(:start=)
   end
   
-  describe "#event" do
+  describe "#on" do
     it "ensures the specified event exists" do
-      @builder.event(:open)
+      @builder.on(:open)
       @builder.machine.events[:open].must_not be_nil
     end
     
     it "optionally yields a provided block to an event builder" do      
-      e = @builder.event(:open) { stays :a }
+      e = @builder.on(:open) { stays :a }
       e.transitions[:a].must == :a
     end
   end

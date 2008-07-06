@@ -9,11 +9,11 @@ describe Stateful::Tracing do
     statefully do
       start :inactive
       
-      event :activate do
+      on :activate do
         moves :inactive => :active
       end
       
-      event :deactivate do
+      on :deactivate do
         moves :active => :inactive
       end
     end
