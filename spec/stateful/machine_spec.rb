@@ -87,11 +87,11 @@ describe Stateful::Machine do
         activate.transitions.size.must == 3
       end
       
-      it "can specify events available everywhere with :ANYTHING" do
+      it "can specify events available everywhere with :any" do
         @machine.apply do
           on :pause do
             move :active => :inactive
-            move :ANYTHING => :paused
+            move :any => :paused
           end
         end
         

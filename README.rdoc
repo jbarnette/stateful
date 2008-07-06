@@ -1,5 +1,12 @@
 = Stateful
 
+  TODO for 1.0:
+    - complete tracing plugin
+    - ar/dm integration
+    - complete timestamps plugin
+    - turn these notes into real docs
+    - flesh out Machine#to_dot
+
 == Example
 
   class AClass
@@ -26,10 +33,11 @@
         stay :state_or_list
       end
       
-      # events that are available on any state can be wildcarded with :ANYTHING
+      # events that are available on any state can be wildcarded with :any,
+      # which is the only reserved state name. Everything else is fair game.
       
       on :ping do
-        move :ANYTHING => :pinged
+        move :any => :pinged
       end
     end
   end
@@ -84,7 +92,7 @@
     end
   end
 
-  # The order of listeners/events: anything marked with an 'if' can
+  # The order of listeners/events: any marked with an 'if' can
   # be vetoed by throwing an exception.
 
   # (an event is triggered, e.g., model.finish!)
@@ -128,13 +136,30 @@
     fired { } 
   end
 
-== Installation
+  # want to make a diagram? there's really really crude support for generating
+  # a graphviz file built in:
+  
+  File.open("machine.dot", "wb") do |f|
+    f.write(AClass.statefully.to_dot)
+  end
 
+== Installing
+
+  # FIXME: 1.0 isn't released yet
+  [sudo] gem install stateful
+  
+== Installing Development Versions
+
+We periodically update Stateful's gemspec on Github. Rather than installing the
+official releases (hosted on RubyForge), you can track the development version.
+Development versions will have a timestamped version number, like 1.0.0.200807060242.
+
+  [sudo] gem sources -a http://gems.github.com   # if you haven't already
   [sudo] gem install stateful
 
 == License
 
-Copyright (c) 2008 John Barnette
+Copyright 2008 John Barnette
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
