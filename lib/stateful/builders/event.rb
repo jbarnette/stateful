@@ -16,7 +16,7 @@ module Stateful #:nodoc:
       
       def move(pair)
         unless Hash === pair && pair.size == 1
-          raise ArgumentError.new("Not a pair: #{pair.inspect}")
+          raise ArgumentError, "Not a pair: #{pair.inspect}"
         end
         
         # ensure all referenced states exist
