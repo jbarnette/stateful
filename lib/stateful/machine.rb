@@ -16,7 +16,6 @@ module Stateful
     
     def apply(options={}, &block)
       Stateful::Builders::Machine.new(self).apply(options, &block)
-      self
     end
         
     def accessorize(target)
@@ -39,6 +38,8 @@ module Stateful
           RUBY
         end
       end
+      
+      self
     end
     
     def execute(model, name)
@@ -65,6 +66,8 @@ module Stateful
       
       fire(to, :entered, args)
       fire(event, :fired, args)
+      
+      self
     end
     
     def to_dot

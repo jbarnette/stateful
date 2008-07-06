@@ -14,6 +14,7 @@ module Stateful #:nodoc:
       def apply(options={}, &block)
         @machine.start = state(options[:start]).name if options[:start]
         instance_eval(&block) if block_given?
+        @machine
       end
             
       def on(name, &block)

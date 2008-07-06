@@ -16,10 +16,7 @@ class Class
     end
 
     return @machine if options.empty? && !block_given?
-
-    @machine.apply(options, &block)
-    @machine.accessorize(self)
-    @machine
+    @machine.apply(options, &block).accessorize(self)
   end
 
   def stateful?
