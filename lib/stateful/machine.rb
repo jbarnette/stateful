@@ -55,7 +55,13 @@ module Stateful
       fire(from, :exiting, args)
       fire(to, :entering, args)
       
+      # 'internal' event
+      fire(to, :persisting, args)
+
       model.current_state = to.name
+
+      # 'internal' event
+      fire(to, :persisted, args)
       
       fire(to, :entered, args)
       fire(event, :fired, args)

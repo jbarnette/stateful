@@ -6,6 +6,8 @@ require "stateful/event"
 
 require "stateful/persisters/default"
 
+require "stateful/tracing"
+
 class Class
   def statefully(options={}, &block)
     unless stateful?
