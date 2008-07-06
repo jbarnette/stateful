@@ -9,3 +9,6 @@ module Spec::Expectations::ObjectExpectations
   undef_method :should if defined?(should)
   undef_method :should_not if defined?(should_not)
 end
+
+require "stateful"
+require "#{File.dirname(__FILE__)}/fixtures/campaign"

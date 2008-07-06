@@ -67,6 +67,18 @@ module Stateful
       fire(event, :fired, args)
     end
     
+    def to_dot
+      out = "digraph machine {"
+      
+      events.each do |name, event|
+        event.transitions.each do |from, to|
+          out << %Q[#{from}->#{to} [label="#{name}"]\n]
+        end
+      end
+      
+      out << "}"
+    end
+    
     private
     
     def fire(target, event_name, args)

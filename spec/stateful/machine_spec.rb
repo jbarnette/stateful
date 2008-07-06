@@ -230,4 +230,18 @@ describe Stateful::Machine do
       specific.must == [@instance, :activate, :active, :inactive]
     end
   end
+  
+  describe "#to_dot" do
+    # yes, this is a crap spec
+    it "generates a dotfile" do
+      machine = Fixtures::Campaign.statefully
+      dots = machine.to_dot
+      
+      machine.events.each do |name, event|
+        event.transitions.each do |from, to|
+          dots.must =~ /#{from}->#{to}/
+        end
+      end
+    end
+  end
 end
