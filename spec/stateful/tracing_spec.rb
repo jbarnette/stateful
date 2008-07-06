@@ -10,14 +10,12 @@ describe Stateful::Tracing do
       start :inactive
       
       on :activate do
-        moves :inactive => :active
+        move :inactive => :active
       end
       
       on :deactivate do
-        moves :active => :inactive
+        move :active => :inactive
       end
     end
   end
-  
-  
 end

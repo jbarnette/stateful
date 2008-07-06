@@ -4,72 +4,72 @@ module Fixtures
       start :incomplete
 
       on :draft do
-        moves [:incomplete, :draft, :rejected] => :draft
+        move [:incomplete, :draft, :rejected] => :draft
       end
 
       on :start do
-        moves [:incomplete, :pending_authorization, :draft, :rejected] => :pending_authorization
+        move [:incomplete, :pending_authorization, :draft, :rejected] => :pending_authorization
       end
 
       on :authorize do
-        moves :pending_authorization => :pending_approval
-        moves :pending_reauthorization => :approved
+        move :pending_authorization => :pending_approval
+        move :pending_reauthorization => :approved
       end
 
       on :approve do
-        moves :pending_approval => :approved
+        move :pending_approval => :approved
       end
 
       on :accept do
-        moves :rejected => :pending_authorization
+        move :rejected => :pending_authorization
       end
 
       on :traffic do
-        moves :approved => :trafficked
+        move :approved => :trafficked
       end
 
       on :finish do
-        moves :trafficked => :finished
+        move :trafficked => :finished
       end
 
       on :restart do
-        moves :finished => :approved
+        move :finished => :approved
       end
 
       on :change_spend do
-        moves :pending_approval => :pending_authorization
-        moves [:approved, :trafficked] => :pending_reauthorization
+        move :pending_approval => :pending_authorization
+        move [:approved, :trafficked] => :pending_reauthorization
 
-        stays :draft, :incomplete, :rejected
+        stay :draft, :incomplete, :rejected
       end
 
       on :update_theme do
-        stays :draft, :incomplete, :pending_approval, 
+        stay :draft, :incomplete, :pending_approval, 
           :approved, :trafficked, :rejected      
       end
 
       on :delete_theme do
-        moves :trafficked => :approved
-        stays :draft, :incomplete, :pending_approval, :approved, :rejected
+        move :trafficked => :approved
+        stay :draft, :incomplete, :pending_approval, :approved, :rejected
       end
 
       on :approve_themes do 
-        moves :trafficked => :approved
-        stays :pending_approval, :approved
+        move :trafficked => :approved
+        stay :pending_approval, :approved
       end
 
       on :change_trafficking do
-        moves :trafficked => :approved
-        stays :incomplete, :draft, :approved, :pending_approval, :rejected
+        move :trafficked => :approved
+        stay :incomplete, :draft, :approved, :pending_approval, :rejected
       end
 
       on :hide do
-        moves [:draft, :rejected, :approved, :pending_approval, :trafficked] => :hidden
-        stays :hidden
+        move [:draft, :rejected, :approved, :pending_approval, :trafficked] => :hidden
+        stay :hidden
       end
 
       on :reject do
-        moves [:pending_approval, :trafficked, :approved] => :rejected
+        move [:pending_approval, :trafficked, :approved] => :rejected
       end
     end
   end

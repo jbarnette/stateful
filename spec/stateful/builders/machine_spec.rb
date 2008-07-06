@@ -17,7 +17,7 @@ describe Stateful::Builders::Machine do
     end
     
     it "optionally yields a provided block to an event builder" do      
-      e = @builder.on(:open) { stays :a }
+      e = @builder.on(:open) { stay :a }
       e.transitions[:a].must == :a
     end
   end

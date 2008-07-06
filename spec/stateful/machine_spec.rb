@@ -61,8 +61,8 @@ describe Stateful::Machine do
       it "can specify event transitions" do
         @machine.apply do
           on :activate do
-            moves :inactive => :active
-            stays :active, :hyper
+            move :inactive => :active
+            stay :active, :hyper
           end
         end
 
@@ -75,15 +75,15 @@ describe Stateful::Machine do
       it "can build events incrementally" do
         @machine.apply do
           on :activate do
-            moves :inactive => :active
-            stays :active
+            move :inactive => :active
+            stay :active
           end
         end
         
         activate = @machine.events[:activate]
         activate.transitions.size.must == 2
         
-        @machine.apply { on(:activate) { stays :dormant } }
+        @machine.apply { on(:activate) { stay :dormant } }
         activate.transitions.size.must == 3
       end
       
@@ -172,11 +172,11 @@ describe Stateful::Machine do
         start :inactive
         
         on :activate do
-          moves :inactive => :active
+          move :inactive => :active
         end
         
         on :deactivate do
-          moves :active => :inactive
+          move :active => :inactive
         end
       end
     end
