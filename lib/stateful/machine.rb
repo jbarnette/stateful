@@ -27,7 +27,7 @@ module Stateful
         unless target.method_defined?("#{name}?")
           target.class_eval <<-RUBY
             def #{name}?
-              current_state == #{name.inspect}
+              self.class.statefully.persister.state_of(self) == #{name.inspect}
             end
           RUBY
         end
@@ -49,7 +49,7 @@ module Stateful
     def execute(model, name)
       raise Stateful::BadModel.new(model) unless model.class.stateful?
       
-      now   = model.current_state
+      now   = persister.state_of(model)
       event = events[name] or raise EventNotFound.new(name)
       from  = states[now] or raise StateNotFound.new(now)
       dest  = event.transitions[now] or raise BadTransition.new(model, event)

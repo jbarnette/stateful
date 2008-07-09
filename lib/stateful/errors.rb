@@ -7,7 +7,8 @@ module Stateful
 
   class BadTransition < StandardError
     def initialize(model, event)
-      super("Can't #{event.name} while #{model.current_state}: #{model.inspect}")
+      current = model.class.statefully.persister.state_of(model)
+      super("Can't #{event.name} while #{current}: #{model.inspect}")
     end
   end
   

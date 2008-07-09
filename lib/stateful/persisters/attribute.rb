@@ -4,6 +4,10 @@ module Stateful
       def persist(model, state)
         model.current_state = state
       end
+      
+      def state_of(model)
+        model.current_state
+      end
 
       def accessorize(target)
         unless target.respond_to?(:current_state)
