@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift(File.expand_path("#{File.dirname(__FILE__)}/../lib"))
 
+require "rubygems"
 require "spec"
 
 module Spec::Expectations::ObjectExpectations
@@ -10,5 +11,6 @@ module Spec::Expectations::ObjectExpectations
   undef_method :should_not if defined?(should_not)
 end
 
+$LOAD_PATH << File.expand_path(File.dirname(__FILE__))
+
 require "stateful"
-require "#{File.dirname(__FILE__)}/fixtures/campaign"

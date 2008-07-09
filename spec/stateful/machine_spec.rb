@@ -245,7 +245,9 @@ describe Stateful::Machine do
       specific.must == [@instance, :activate, :active, :inactive]
     end
   end
-  
+
+  require "fixtures/machines/campaign"
+
   describe "#to_dot" do
     # yes, this is a crap spec
     it "generates a dotfile" do
