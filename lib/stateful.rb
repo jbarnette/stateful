@@ -11,8 +11,8 @@ require "stateful/tracing"
 class Class
   def statefully(options={}, &block)
     unless stateful?
-      @machine = Stateful::Machine.new
-      Stateful::Persisters.decorate(self)
+      persister = Stateful::Persisters.for(self)
+      @machine = Stateful::Machine.new(persister)
     end
 
     return @machine if options.empty? && !block_given?

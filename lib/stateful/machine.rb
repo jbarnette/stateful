@@ -6,12 +6,14 @@ module Stateful
     include Stateful::Listeners
 
     attr_reader   :events
+    attr_reader   :persister
     attr_accessor :start
     attr_reader   :states
     
-    def initialize
-      @events = {}
-      @states = {}
+    def initialize(persister=Stateful::Persisters::Default.new)
+      @events    = {}
+      @persister = persister
+      @states    = {}
     end
     
     def apply(options={}, &block)
@@ -19,6 +21,8 @@ module Stateful
     end
         
     def accessorize(target)
+      @persister.accessorize(target)
+      
       @states.keys.each do |name|
         unless target.method_defined?("#{name}?")
           target.class_eval <<-RUBY
@@ -59,7 +63,7 @@ module Stateful
       # 'internal' event
       fire(to, :persisting, args)
 
-      model.current_state = to.name
+      @persister.persist(model, to.name)
 
       # 'internal' event
       fire(to, :persisted, args)
