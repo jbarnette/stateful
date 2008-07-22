@@ -6,6 +6,12 @@ require "spec/rake/spectask"
 
 require "./lib/stateful/version.rb"
 
+module Rakefile
+  def self.windows?
+    /djgpp|(cyg|ms|bcc)win|mingw/ =~ RUBY_PLATFORM
+  end
+end
+
 stateful_gemspec = Gem::Specification.new do |s|
   s.name              = "stateful"
   s.rubyforge_project = "stateful"
@@ -27,21 +33,20 @@ Rake::GemPackageTask.new(stateful_gemspec) do |pkg|
 end
 
 namespace :gem do
+  desc "Build and install as a RubyGem"
   task :install => :package do
-    sh %{sudo gem install --local pkg/stateful-#{Stateful::VERSION}}
+    sh %{#{'sudo' unless Rakefile.windows?} gem install --local pkg/stateful-#{Stateful::VERSION}}
   end
   
-  namespace :spec do
-    desc "Update stateful.gemspec"
-    task :generate do
-      File.open("stateful.gemspec", "w") do |f|
-        f.puts(stateful_gemspec.to_ruby)
-      end
+  desc "Generate stateful.gemspec"
+  task :spec do
+    File.open("stateful.gemspec", "w") do |f|
+      f.puts(stateful_gemspec.to_ruby)
     end
   end
 end
 
-desc "Run all specs"
+desc "Run specs"
 Spec::Rake::SpecTask.new do |t|
   t.spec_files = FileList["spec/**/*_spec.rb"]
   t.spec_opts = ["--options", "spec/spec.opts"]
@@ -49,5 +54,5 @@ end
 
 task :default => :spec
 
-desc "Remove all generated artifacts"
+desc "Keep things tidy"
 task :clean => :clobber_package
