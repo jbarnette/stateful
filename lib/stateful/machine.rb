@@ -63,7 +63,7 @@ module Stateful
       # 'internal' event
       fire(to, :persisting, args)
 
-      @persister.persist(model, to.name)
+      persister.persist(model, to.name)
 
       # 'internal' event
       fire(to, :persisted, args)
