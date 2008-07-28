@@ -26,7 +26,7 @@ module Stateful #:nodoc:
         Array(froms).each { |from| @event.transitions[from] = to }
 
         # covers 'move from any state to :dest'
-        @event.transitions.default = to if froms == :any
+        @event.transitions.default = to if froms == :ANY
       end
       
       def stay(*names)

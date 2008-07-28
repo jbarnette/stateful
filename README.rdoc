@@ -1,11 +1,13 @@
 = Stateful
 
   TODO for 1.0:
+    - make machine.valid? :from => :to work
     - complete tracing plugin
     - ar/dm integration
     - complete timestamps plugin
     - turn these notes into real docs
     - flesh out Machine#to_dot
+    - clean up, minimally document, and :nodoc: classes
 
 == Example
 
@@ -33,11 +35,11 @@
         stay :state_or_list
       end
       
-      # events that are available on any state can be wildcarded with :any,
+      # events that are available on any state can be wildcarded with :ANY,
       # which is the only reserved state name. Everything else is fair game.
       
       on :ping do
-        move :any => :pinged
+        move :ANY => :pinged
       end
     end
   end
@@ -47,31 +49,32 @@
 
   AClass.statefully do
   
-    # you can listen for attempted state entry. Stateful will provide your
-    # block with the model that's changing state, the destination state,
-    # and the previous state (if any).
+    # you can listen for attempted state entry.
   
-    # all the block params are optional. your block can take no arguments
-    # if that sproings your winkie.
-  
-    entering :state_or_list do |model, event, to, from|
+    entering :state_or_list do |ctx|
       # do some ruby stuff! Exceptions thrown in here will
       # keep the transition from occuring, i.e., the model's
       # current state will still be 'from'.
+      
+      # the context here gives you all sorts of stuff:
+      
+      ctx.model  # the target model,
+      ctx.event  # the name of the event that was fired,
+      ctx.to     # the destination state,
+      ctx.from   # the source state, and
+      ctx.extras # any additional keys you might've passed in!
     end
   
-    # you can also listen for successful state entry. same optional block
-    # params are available.
+    # you can also listen for successful state entry. same context is available.
   
-    entered :state_or_list do |model, event, to, from|
+    entered :state_or_list do |ctx|
       # more ruby stuff! You can throw exceptions in here, of course,
       # but it won't change the model's current state.
     end
   
-    # listening for attempted state exit is just like state entry,
-    # but the destination state is provided instead of the source.
-  
-    exiting :state_or_list do |model, event, to, from|
+    # listening for attempted state exit:
+      
+    exiting :state_or_list do |ctx|
       # awesome ruby stuff! throwing exceptions in here vetoes
       # the transition.
     end
@@ -81,13 +84,13 @@
   
     # it's possible to listen to events fire, too!
   
-    firing :event_or_list do |model, event, to, from|
+    firing :event_or_list do |ctx|
       # throwing exceptions here will veto the transition
     end
   
     # or after they've successfully fired
 
-    fired :event_or_list do |model, event, to, from|
+    fired :event_or_list do |ctx|
       # throwing here does squat
     end
   end

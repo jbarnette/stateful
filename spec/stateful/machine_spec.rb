@@ -87,11 +87,11 @@ describe Stateful::Machine do
         activate.transitions.size.must == 3
       end
       
-      it "can specify events available everywhere with :any" do
+      it "can specify events available everywhere with :ANY" do
         @machine.apply do
           on :pause do
             move :active => :inactive
-            move :any => :paused
+            move :ANY => :paused
           end
         end
         
@@ -234,15 +234,29 @@ describe Stateful::Machine do
       global, specific = nil
       
       AStatefulClass.statefully do
-        firing { |*args| global = args }
-        firing(:activate) { |*args| specific = args }
+        firing { |ctx| global = ctx }
+        firing(:activate) { |ctx| specific = ctx }
       end
       
       AStatefulClass.statefully.execute(@instance, :activate)
       
-      # model, event, to, from
-      global.must == [@instance, :activate, :active, :inactive]
-      specific.must == [@instance, :activate, :active, :inactive]
+      [global, specific].each do |ctx|
+        ctx.model.must == @instance
+        ctx.event.must == :activate
+        ctx.to.must == :active
+        ctx.from.must == :inactive        
+      end
+    end
+    
+    it "passes provided extras on to the handlers" do
+      ctx = nil
+      
+      AStatefulClass.statefully do
+        fired { |x| ctx = x }
+      end
+      
+      AStatefulClass.statefully.execute(@instance, :activate, :key => :value)
+      ctx.extras[:key].must == :value
     end
   end
 

@@ -1,9 +1,11 @@
+# FIXME: only require this crap where it's necessary
+
 require "stateful/version"
 require "stateful/errors"
 require "stateful/machine"
 require "stateful/state"
 require "stateful/event"
-
+require "stateful/context"
 require "stateful/persisters"
 
 require "stateful/tracing"
