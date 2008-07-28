@@ -1,14 +1,14 @@
 Gem::Specification.new do |s|
   s.name = %q{stateful}
-  s.version = "1.0.0.200807092012"
+  s.version = "1.0.0.200807271956"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["John Barnette"]
-  s.date = %q{2008-07-09}
+  s.date = %q{2008-07-27}
   s.description = %q{Make your Ruby objects stately.}
   s.email = %q{jbarnette@rubyforge.org}
   s.extra_rdoc_files = ["README.rdoc"]
-  s.files = ["README.rdoc", "Rakefile", "lib/stateful", "lib/stateful/builders", "lib/stateful/builders/event.rb", "lib/stateful/builders/event.rbc", "lib/stateful/builders/machine.rb", "lib/stateful/builders/machine.rbc", "lib/stateful/errors.rb", "lib/stateful/errors.rbc", "lib/stateful/event.rb", "lib/stateful/event.rbc", "lib/stateful/listeners.rb", "lib/stateful/listeners.rbc", "lib/stateful/machine.rb", "lib/stateful/machine.rbc", "lib/stateful/persisters", "lib/stateful/persisters/activerecord.rb", "lib/stateful/persisters/activerecord.rbc", "lib/stateful/persisters/attribute.rb", "lib/stateful/persisters/default.rb", "lib/stateful/persisters/default.rbc", "lib/stateful/persisters.rb", "lib/stateful/persisters.rbc", "lib/stateful/state.rb", "lib/stateful/state.rbc", "lib/stateful/tracing.rb", "lib/stateful/tracing.rbc", "lib/stateful/version.rb", "lib/stateful/version.rbc", "lib/stateful.rb", "lib/stateful.rbc", "spec/fixtures", "spec/fixtures/activerecord", "spec/fixtures/activerecord/model.rb", "spec/fixtures/activerecord/schema.rb", "spec/fixtures/machines", "spec/fixtures/machines/campaign.rb", "spec/fixtures/machines/campaign.rbc", "spec/helper.rb", "spec/helper.rbc", "spec/spec.opts", "spec/stateful", "spec/stateful/builders", "spec/stateful/builders/event_spec.rb", "spec/stateful/builders/event_spec.rbc", "spec/stateful/builders/machine_spec.rb", "spec/stateful/builders/machine_spec.rbc", "spec/stateful/event_spec.rb", "spec/stateful/event_spec.rbc", "spec/stateful/listeners_spec.rb", "spec/stateful/listeners_spec.rbc", "spec/stateful/machine_spec.rb", "spec/stateful/machine_spec.rbc", "spec/stateful/persisters", "spec/stateful/persisters/activerecord_spec.rb", "spec/stateful/persisters/activerecord_spec.rbc", "spec/stateful/tracing_spec.rb", "spec/stateful/tracing_spec.rbc"]
+  s.files = ["README.rdoc", "Rakefile", "lib/stateful", "lib/stateful/builders", "lib/stateful/builders/event.rb", "lib/stateful/builders/machine.rb", "lib/stateful/context.rb", "lib/stateful/errors.rb", "lib/stateful/event.rb", "lib/stateful/listeners.rb", "lib/stateful/machine.rb", "lib/stateful/persisters", "lib/stateful/persisters/activerecord.rb", "lib/stateful/persisters/attribute.rb", "lib/stateful/persisters/default.rb", "lib/stateful/persisters.rb", "lib/stateful/state.rb", "lib/stateful/tracing.rb", "lib/stateful/version.rb", "lib/stateful.rb", "spec/fixtures", "spec/fixtures/activerecord", "spec/fixtures/activerecord/model.rb", "spec/fixtures/activerecord/schema.rb", "spec/fixtures/machines", "spec/fixtures/machines/campaign.rb", "spec/helper.rb", "spec/spec.opts", "spec/stateful", "spec/stateful/builders", "spec/stateful/builders/event_spec.rb", "spec/stateful/builders/machine_spec.rb", "spec/stateful/context_spec.rb", "spec/stateful/event_spec.rb", "spec/stateful/listeners_spec.rb", "spec/stateful/machine_spec.rb", "spec/stateful/persisters", "spec/stateful/persisters/activerecord_spec.rb", "spec/stateful/tracing_spec.rb"]
   s.has_rdoc = true
   s.homepage = %q{http://github.com/jbarnette/stateful}
   s.require_paths = ["lib"]
