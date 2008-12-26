@@ -35,11 +35,15 @@ end
 namespace :gem do
   desc "Build and install as a RubyGem"
   task :install => :package do
-    sh %{#{'sudo' unless Rakefile.windows?} gem install --local pkg/stateful-#{Stateful::VERSION}}
+    sh %{#{'sudo' unless Rakefile.windows?} gem install --local pkg/stateful-#{Stateful::VERSION}*}
   end
   
   desc "Generate stateful.gemspec"
   task :spec do
+    unless ENV["RELEASE"] == "true"
+      stateful_gemspec.version = "#{Stateful::VERSION}.#{Time.now.strftime("%Y%m%d%H%M")}"      
+    end
+
     File.open("stateful.gemspec", "w") do |f|
       f.puts(stateful_gemspec.to_ruby)
     end

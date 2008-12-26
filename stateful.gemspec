@@ -1,10 +1,12 @@
+# -*- encoding: utf-8 -*-
+
 Gem::Specification.new do |s|
   s.name = %q{stateful}
-  s.version = "1.0.0.200807271956"
+  s.version = "1.0.0.200812261315"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["John Barnette"]
-  s.date = %q{2008-07-27}
+  s.date = %q{2008-12-26}
   s.description = %q{Make your Ruby objects stately.}
   s.email = %q{jbarnette@rubyforge.org}
   s.extra_rdoc_files = ["README.rdoc"]
@@ -13,14 +15,14 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/jbarnette/stateful}
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{stateful}
-  s.rubygems_version = %q{1.2.0}
+  s.rubygems_version = %q{1.3.0}
   s.summary = %q{Make your Ruby objects stately.}
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
     s.specification_version = 2
 
-    if current_version >= 3 then
+    if Gem::Version.new(Gem::RubyGemsVersion) >= Gem::Version.new('1.2.0') then
     else
     end
   else
