@@ -2,6 +2,8 @@
 
 # Stateful
 
+Give an object or class stateful behavior.
+
 ## Examples
 
 ## Compatibility
