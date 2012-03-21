@@ -2,7 +2,7 @@
 
 # Stateful
 
-Give an object or class stateful behavior.
+Give an object or class stateful behavior. This library is in progress.
 
 ## Examples
 
